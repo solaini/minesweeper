@@ -1,12 +1,3 @@
-//Function prints the current status of the Minesweeper board
-// const printBoard = () => {
-//     console.log("Current Board:");
-//     console.log(board[0].join(' | '));
-//     console.log(board[1].join(' | '));
-//     console.log(board[2].join(' | '));
-// }
-
-
 const printBoard = board => {
     console.log(board.map(row => row.join(' | ')).join('\n'));
 }
