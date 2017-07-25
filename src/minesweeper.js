@@ -1,3 +1,24 @@
+class Game{
+    constructor(numberOfRows, numberOfColumns, numberOfBombs){
+        this._board = new Board(numberOfRows, numberOfColumns, numberOfBombs);
+    };
+    playMove(rowIndex, columnIndex){
+        this._board.flipTile(rowIndex, columnIndex);
+        if(this._board.playerBoard[rowIndex][columnIndex] === 'B'){
+            console.log("Game Over!");
+            this._board.print();
+        }else if(this._board.hasSafeTiles === false){
+            console.log("You win!");
+            this._board.print();
+        }else{
+            console.log("Current Board: ");
+            this._board.print();
+        }
+    };
+}
+
+
+
 class Board {
     constructor(numberOfRows, numberOfColumns, numberOfBombs){
         this._numberOfBombs;
@@ -31,12 +52,12 @@ class Board {
                 const neighborColumnIndex = columnIndex + offset[1];
                 if(neighborRowIndex >= 0 && neighborRowIndex < numberOfRows && neighborColumnIndex >= 0 && neighborColumnIndex < numberOfColumns){
                     if(this._bombBoard[neighborRowIndex][neighborColumnIndex] === 'B'){
-                    this._numberOfBombs++;//Is this a local variable or a constructor variable?
+                    numberOfBombs++;//Is this a local variable or a constructor variable?
                 };
-                console.log(`There are ${numberOfBombs} number of Bombs`);
+                //console.log(`There are ${numberOfBombs} number of Bombs`);
             };
         });
-        return this._numberOfBombs;
+        return numberOfBombs;
     };
     hasSafeTiles(){
          return this._numberOfTiles !== this._numberOfBombs;
@@ -52,7 +73,7 @@ class Board {
         let board = [];
         for(let i = 0; i < numberOfRows; i++){
             let row = [];
-            for(j = 0; j < numberOfColumns; j++){
+            for(let j = 0; j < numberOfColumns; j++){
                 row.push(' ');
             } 
             board.push(row);
@@ -64,7 +85,7 @@ class Board {
         let board = [];
         for(let i = 0; i < numberOfRows; i++){
             let row = [];
-            for(j = 0; j < numberOfColumns; j++){
+            for(let j = 0; j < numberOfColumns; j++){
                 row.push(null);
             } 
             board.push(row);
@@ -83,13 +104,6 @@ class Board {
     }
 }
 
-
-let playerBoard = generatePlayerBoard(3, 3);
-let bombBoard = generateBombBoard(3, 3, 4);
-console.log('Player Board: ');
-printBoard(playerBoard);
-console.log('Bomb Board: ');
-printBoard(bombBoard);
-flipTile(playerBoard, bombBoard, 0, 0);
-console.log('Updated Player Board: ');
-printBoard(playerBoard);
+const g = new Game(3, 3, 3);
+g.playMove(0, 0);
+g.playMove(1,1);
